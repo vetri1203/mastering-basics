@@ -255,6 +255,18 @@ class Arrays<T> {
     }
     return undefined;
   }
+
+  findIndex(
+    predicate: (value: T, index: number, obj: T[]) => unknown,
+    thisArg?: any
+  ): number {
+    for (let index = 0; index < this.length; index++) {
+      if (predicate(this.data[index], index, this.data)) {
+        return index;
+      }
+    }
+    return -1;
+  }
 }
 
 function result() {
@@ -298,7 +310,7 @@ function result() {
   // console.log(dataSet.indexOf("Mango", 2));
   // console.log(dataSet.lastIndexOf("Apple"));
 
-  console.log(dataSet.find((x) => x === "Mango"));
+  console.log(dataSet.findIndex((x) => x === "Mango"));
 }
 
 result();
