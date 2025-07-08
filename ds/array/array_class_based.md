@@ -21,7 +21,7 @@
 - [x] `indexOf()` – Returns the first index of an element.
 - [x] `lastIndexOf()` – Returns the last index of an element.
 - [x] `find()` – Returns the first element that matches a condition.
-- [ ] `findIndex()` – Returns the index of the first matching element.
+- [x] `findIndex()` – Returns the index of the first matching element.
 
 ## ✅ Iteration
 
