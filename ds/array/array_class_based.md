@@ -17,10 +17,10 @@
 
 ## ✅ Searching & Indexing
 
-- [ ] `includes()` – Checks if an element is present.
-- [ ] `indexOf()` – Returns the first index of an element.
-- [ ] `lastIndexOf()` – Returns the last index of an element.
-- [ ] `find()` – Returns the first element that matches a condition.
+- [x] `includes()` – Checks if an element is present.
+- [x] `indexOf()` – Returns the first index of an element.
+- [x] `lastIndexOf()` – Returns the last index of an element.
+- [x] `find()` – Returns the first element that matches a condition.
 - [ ] `findIndex()` – Returns the index of the first matching element.
 
 ## ✅ Iteration

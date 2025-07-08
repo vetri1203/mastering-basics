@@ -115,46 +115,52 @@ class Arrays<T> {
     let newArray = [];
     let pointer = 0;
 
-    // removing elements
-    if (position < 0) position = 0;
-    if (position > this.length) position = this.length;
+    if (position < 0) {
+      position = this.length + position;
+      if (position < 0) position = 0;
+    } else if (position > this.length) {
+      position = this.length;
+    }
 
     let removedElement = [];
-    for (let index = position; index < position + remove; index++) {
+    for (
+      let index = position;
+      index < position + remove && index < this.length;
+      index++
+    ) {
       removedElement[pointer] = this.data[index];
       pointer++;
     }
+    newArray = [];
     pointer = 0;
     for (let index = 0; index < this.length; index++) {
-      if (position == index) {
-        index += remove;
-        if (this.data[index]) {
-          newArray[pointer] = this.data[index];
-        }
-        pointer++;
-      } else {
-        newArray[pointer] = this.data[index];
-        pointer++;
+      if (index === position) {
+        index += remove - 1;
+        continue;
       }
+      newArray[pointer] = this.data[index];
+      pointer++;
     }
 
     this.data = newArray;
 
-    // adding the new elements in the exsisting array
     newArray = [];
-    if (!items) return;
     pointer = 0;
     let isAdded = false;
     for (let index = 0; index < this.length; index++) {
-      if (index == position && !isAdded) {
+      if (index === position && !isAdded) {
         for (let j = 0; j < this.itemsLength(items); j++) {
-          newArray[pointer] = items[j];
-          pointer++;
+          newArray[pointer++] = items[j];
         }
         isAdded = true;
-        index--;
-      } else {
-        newArray[pointer] = this.data[index];
+      }
+      newArray[pointer] = this.data[index];
+      pointer++;
+    }
+
+    if (position >= this.length && items.length > 0) {
+      for (let j = 0; j < this.itemsLength(items); j++) {
+        newArray[pointer] = items[j];
         pointer++;
       }
     }
@@ -205,10 +211,54 @@ class Arrays<T> {
     }
     return newArray;
   }
+
+  includes(searchElement: T, startIndex: number = 0) {
+    console.log(startIndex);
+    let actualStartIndex = startIndex;
+    if (startIndex < 0) {
+      actualStartIndex = this.length + startIndex;
+      if (actualStartIndex < 0) actualStartIndex = 0;
+    }
+
+    for (let index = actualStartIndex; index < this.length; index++) {
+      if (searchElement === this.data[index]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  indexOf(searchElement: T, startIndex: number = 0) {
+    if (startIndex < 0 || startIndex > this.length) return -1;
+
+    for (let index = startIndex; index < this.length; index++) {
+      if (searchElement === this.data[index]) return index;
+    }
+    return -1;
+  }
+
+  lastIndexOf(searchElement: T, startIndex: number = 0) {
+    if (startIndex < 0 || startIndex > this.length) return -1;
+    let searchElementIndex = -1;
+
+    for (let index = startIndex; index < this.length; index++) {
+      if (searchElement === this.data[index]) searchElementIndex = index;
+    }
+    return searchElementIndex;
+  }
+
+  find(predicate: (value: T, index: number, obj: T[]) => value is T) {
+    for (let index = 0; index < this.length; index++) {
+      if (predicate(this.data[index], index, this.data)) {
+        return this.data[index];
+      }
+    }
+    return undefined;
+  }
 }
 
 function result() {
-  const dataSet = new Arrays(["Banana", "Orange", "Apple", "Mango"]);
+  const dataSet = new Arrays(["Apple", "Orange", "Mango"]);
   const arr = [1, 1, 1];
   console.log("Initital Array", dataSet.data);
   // console.log(" Array length : ", dataSet.length);
@@ -234,9 +284,9 @@ function result() {
   // console.log("After shift : ", dataSet.data);
   // console.log(dataSet.length);
 
-  console.log(dataSet.splice(2, 1, "Lemon", "Kiwi"), "splice");
-  console.log("After Splice Removing : ", dataSet);
-  console.log("length : ", dataSet.length);
+  // console.log(dataSet.splice(-1, 2, "Lemon", "Kiwi"), "splice");
+  // console.log("After Splice Removing : ", dataSet);
+  // console.log("length : ", dataSet.length);
 
   // const arr1 = ["Cecilie", "Lone"];
   // const arr2 = ["Emil", "Tobias", "Linus"];
@@ -244,6 +294,11 @@ function result() {
   // console.log(dataSet.concat(arr2, arr3));
 
   // console.log(dataSet.slice(0, 4));
+  // console.log(dataSet.includes("Banana", -10), "inclu");
+  // console.log(dataSet.indexOf("Mango", 2));
+  // console.log(dataSet.lastIndexOf("Apple"));
+
+  console.log(dataSet.find((x) => x === "Mango"));
 }
 
 result();
