@@ -116,7 +116,15 @@ class Arrays<T> {
     let pointer = 0;
 
     // removing elements
+    if (position < 0) position = 0;
+    if (position > this.length) position = this.length;
 
+    let removedElement = [];
+    for (let index = position; index < position + remove; index++) {
+      removedElement[pointer] = this.data[index];
+      pointer++;
+    }
+    pointer = 0;
     for (let index = 0; index < this.length; index++) {
       if (position == index) {
         index += remove;
@@ -152,6 +160,7 @@ class Arrays<T> {
     }
 
     this.data = newArray;
+    return removedElement;
   }
 
   /**
@@ -199,7 +208,7 @@ class Arrays<T> {
 }
 
 function result() {
-  const dataSet = new Arrays(["Cecilie", "Lone"]);
+  const dataSet = new Arrays(["Banana", "Orange", "Apple", "Mango"]);
   const arr = [1, 1, 1];
   console.log("Initital Array", dataSet.data);
   // console.log(" Array length : ", dataSet.length);
@@ -225,14 +234,14 @@ function result() {
   // console.log("After shift : ", dataSet.data);
   // console.log(dataSet.length);
 
-  // dataSet.splice(1, 3, 6, 7);
-  // console.log("After Splice Removing : ", dataSet);
-  // console.log("length : ", dataSet.length);
+  console.log(dataSet.splice(2, 1, "Lemon", "Kiwi"), "splice");
+  console.log("After Splice Removing : ", dataSet);
+  console.log("length : ", dataSet.length);
 
-  const arr1 = ["Cecilie", "Lone"];
-  const arr2 = ["Emil", "Tobias", "Linus"];
-  const arr3 = ["Robin"];
-  console.log(dataSet.concat(arr2, arr3));
+  // const arr1 = ["Cecilie", "Lone"];
+  // const arr2 = ["Emil", "Tobias", "Linus"];
+  // const arr3 = ["Robin"];
+  // console.log(dataSet.concat(arr2, arr3));
 
   // console.log(dataSet.slice(0, 4));
 }
