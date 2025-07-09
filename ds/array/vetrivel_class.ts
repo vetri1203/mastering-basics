@@ -267,12 +267,34 @@ class Arrays<T> {
     }
     return -1;
   }
+
+  forEach(
+    callbackfn: (value: T, index: number, array: T[]) => void,
+    thisArg?: any
+  ): void {
+    for (let index = 0; index < this.length; index++) {
+      callbackfn(this.data[index], index, this.data);
+    }
+  }
+
+  map(
+    callbackfn: (value: T, index: number, array: T[]) => unknown,
+    thisArg?: any
+  ): unknown[] {
+    const newArray = [];
+    for (let index = 0; index < this.length; index++) {
+      newArray[index] = callbackfn(this.data[index], index, this.data);
+    }
+    return newArray;
+  }
 }
 
 function result() {
-  const dataSet = new Arrays(["Apple", "Orange", "Mango"]);
+  const dataSet = new Arrays([4, 9, 16, 25]).data;
   const arr = [1, 1, 1];
-  console.log("Initital Array", dataSet.data);
+
+  // console.log(arr);
+  // console.log("Initital Array", dataSet.data);
   // console.log(" Array length : ", dataSet.length);
   // dataSet.push([5, 3]);
 
@@ -310,7 +332,14 @@ function result() {
   // console.log(dataSet.indexOf("Mango", 2));
   // console.log(dataSet.lastIndexOf("Apple"));
 
-  console.log(dataSet.findIndex((x) => x === "Mango"));
+  // console.log(dataSet.findIndex((x) => x === "Mango"));
+  // dataSet.forEach((data, index) => {
+  //   console.log("Index : ", index, " Data for that index is :", data);
+  // });
+
+  console.log(dataSet.map((index) => index * 2));
+
+  console.log(dataSet, "old array");
 }
 
 result();
