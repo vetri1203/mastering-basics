@@ -302,10 +302,33 @@ class Arrays<T> {
     }
     return newArray;
   }
+
+  reduce(
+    callbackfn: (
+      previousValue: T,
+      currentValue: T,
+      currentIndex: number,
+      array: T[]
+    ) => T,
+    initialValue?: T
+  ) {
+    let result;
+    let index = 0;
+    if (initialValue) {
+      result = initialValue;
+    } else {
+      result = this.data[index];
+      index++;
+    }
+    for (; index < this.length; index++) {
+      result = callbackfn(result, this.data[index], index, this.data);
+    }
+    return result;
+  }
 }
 
 function result() {
-  const dataSet = new Arrays([32, 33, 16, 40]).data;
+  const dataSet = new Arrays([1, 2, 3, 4]);
   const arr = [1, 1, 1];
 
   // arr.filter();
@@ -353,8 +376,11 @@ function result() {
   //   consolenewa.log("Index : ", index, " Data for that index is :", data);
   // });
 
-  // console.log(dataSet.map((index) => index * 2));
-  const newa = dataSet.filter((x) => x >= 18);
+  console.log(dataSet.map((index) => index * 2));
+  const newa = dataSet.reduce(
+    (accumulator, currentValue) => accumulator - currentValue,
+    1
+  );
   console.log(newa);
   console.log(dataSet);
 }
