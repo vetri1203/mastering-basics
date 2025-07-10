@@ -352,11 +352,23 @@ class Arrays<T> {
 
     return result;
   }
+
+  some(
+    predicate: (value: T, index: number, array: T[]) => unknown,
+    thisArg?: any
+  ): boolean {
+    if (this.length === 0) return false;
+    for (let index = 0; index < this.length; index++) {
+      if (predicate(this.data[index], index, this.data)) return true;
+    }
+    return false;
+  }
 }
 
 function result() {
   const dataSet = new Arrays([1, 2, 3, 4]);
   const arr = [1, 1, 1];
+  // arr.some();
   // arr.reduceRight();
   // arr.filter();
   // console.log(arr);
@@ -409,7 +421,7 @@ function result() {
     1
   );
   console.log(newa);
-  console.log(dataSet);
+  console.log(dataSet.some((x) => x > 22));
 }
 
 result();
