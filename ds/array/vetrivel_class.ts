@@ -287,12 +287,28 @@ class Arrays<T> {
     }
     return newArray;
   }
+
+  filter(
+    predicate: (value: T, index: number, array: T[]) => value is T,
+    thisArg?: any
+  ): T[] {
+    const newArray = [];
+    let pointer = 0;
+    for (let index = 0; index < this.length; index++) {
+      if (predicate(this.data[index], index, this.data)) {
+        newArray[pointer] = this.data[index];
+        pointer++;
+      }
+    }
+    return newArray;
+  }
 }
 
 function result() {
-  const dataSet = new Arrays([4, 9, 16, 25]).data;
+  const dataSet = new Arrays([32, 33, 16, 40]).data;
   const arr = [1, 1, 1];
 
+  // arr.filter();
   // console.log(arr);
   // console.log("Initital Array", dataSet.data);
   // console.log(" Array length : ", dataSet.length);
@@ -334,12 +350,13 @@ function result() {
 
   // console.log(dataSet.findIndex((x) => x === "Mango"));
   // dataSet.forEach((data, index) => {
-  //   console.log("Index : ", index, " Data for that index is :", data);
+  //   consolenewa.log("Index : ", index, " Data for that index is :", data);
   // });
 
-  console.log(dataSet.map((index) => index * 2));
-
-  console.log(dataSet, "old array");
+  // console.log(dataSet.map((index) => index * 2));
+  const newa = dataSet.filter((x) => x >= 18);
+  console.log(newa);
+  console.log(dataSet);
 }
 
 result();
