@@ -312,6 +312,7 @@ class Arrays<T> {
     ) => T,
     initialValue?: T
   ) {
+    if (this.length == 0) return;
     let result;
     let index = 0;
     if (initialValue) {
@@ -325,12 +326,38 @@ class Arrays<T> {
     }
     return result;
   }
+
+  reduceRight(
+    callbackfn: (
+      previousValue: T,
+      currentValue: T,
+      currentIndex: number,
+      array: T[]
+    ) => T,
+    initialValue?: T
+  ) {
+    if (this.length == 0) return;
+    let index = this.length - 1;
+    let result;
+    if (initialValue) {
+      result = initialValue;
+    } else {
+      result = this.data[index];
+      index--;
+    }
+
+    for (; index >= 0; index--) {
+      result = callbackfn(result, this.data[index], index, this.data);
+    }
+
+    return result;
+  }
 }
 
 function result() {
   const dataSet = new Arrays([1, 2, 3, 4]);
   const arr = [1, 1, 1];
-
+  // arr.reduceRight();
   // arr.filter();
   // console.log(arr);
   // console.log("Initital Array", dataSet.data);
@@ -377,7 +404,7 @@ function result() {
   // });
 
   console.log(dataSet.map((index) => index * 2));
-  const newa = dataSet.reduce(
+  const newa = dataSet.reduceRight(
     (accumulator, currentValue) => accumulator - currentValue,
     1
   );
