@@ -247,9 +247,12 @@ class Arrays<T> {
     return searchElementIndex;
   }
 
-  find(predicate: (value: T, index: number, obj: T[]) => value is T) {
+  find(
+    predicate: (value: T, index: number, obj: T[]) => value is T,
+    thisArg?: any
+  ) {
     for (let index = 0; index < this.length; index++) {
-      if (predicate(this.data[index], index, this.data)) {
+      if (predicate.call(thisArg || this, this.data[index], index, this.data)) {
         return this.data[index];
       }
     }
@@ -261,7 +264,7 @@ class Arrays<T> {
     thisArg?: any
   ): number {
     for (let index = 0; index < this.length; index++) {
-      if (predicate(this.data[index], index, this.data)) {
+      if (predicate.call(thisArg || this, this.data[index], index, this.data)) {
         return index;
       }
     }
@@ -273,7 +276,7 @@ class Arrays<T> {
     thisArg?: any
   ): void {
     for (let index = 0; index < this.length; index++) {
-      callbackfn(this.data[index], index, this.data);
+      callbackfn.call(thisArg || this, this.data[index], index, this.data);
     }
   }
 
@@ -283,7 +286,12 @@ class Arrays<T> {
   ): unknown[] {
     const newArray = [];
     for (let index = 0; index < this.length; index++) {
-      newArray[index] = callbackfn(this.data[index], index, this.data);
+      newArray[index] = callbackfn.call(
+        thisArg || this,
+        this.data[index],
+        index,
+        this.data
+      );
     }
     return newArray;
   }
@@ -295,7 +303,7 @@ class Arrays<T> {
     const newArray = [];
     let pointer = 0;
     for (let index = 0; index < this.length; index++) {
-      if (predicate(this.data[index], index, this.data)) {
+      if (predicate.call(thisArg || this, this.data[index], index, this.data)) {
         newArray[pointer] = this.data[index];
         pointer++;
       }
@@ -359,7 +367,8 @@ class Arrays<T> {
   ): boolean {
     if (this.length === 0) return false;
     for (let index = 0; index < this.length; index++) {
-      if (predicate(this.data[index], index, this.data)) return true;
+      if (predicate.call(thisArg || this, this.data[index], index, this.data))
+        return true;
     }
     return false;
   }
@@ -370,7 +379,8 @@ class Arrays<T> {
   ): boolean {
     if (this.length === 0) return false;
     for (let index = 0; index < this.length; index++) {
-      if (!predicate(this.data[index], index, this.data)) return false;
+      if (!predicate.call(thisArg || this, this.data[index], index, this.data))
+        return false;
     }
     return false;
   }
