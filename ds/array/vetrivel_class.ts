@@ -363,6 +363,17 @@ class Arrays<T> {
     }
     return false;
   }
+
+  every(
+    predicate: (value: T, index: number, array: T[]) => unknown,
+    thisArg?: any
+  ): boolean {
+    if (this.length === 0) return false;
+    for (let index = 0; index < this.length; index++) {
+      if (!predicate(this.data[index], index, this.data)) return false;
+    }
+    return false;
+  }
 }
 
 function result() {
@@ -421,7 +432,7 @@ function result() {
     1
   );
   console.log(newa);
-  console.log(dataSet.some((x) => x > 22));
+  console.log(dataSet.some((x) => x > 2));
 }
 
 result();
